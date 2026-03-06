@@ -1,1 +1,175 @@
-<p>cuentas works!</p>
+<div class="cuentas-container">
+  <h1>Cuentas</h1>
+  
+  <!-- Search and New Button -->
+  <div class="actions-bar">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="Buscar" 
+        [(ngModel)]="searchTerm"
+        (input)="filterCuentas()"
+        class="search-input"
+      >
+      <i class="fas fa-search search-icon"></i>
+    </div>
+    <button class="btn btn-primary" (click)="openNewCuentaModal()">
+    Nueva
+    </button>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Accounts Table -->
+  <div class="table-container">
+    <table class="cuentas-table">
+      <thead>
+        <tr>
+          <th>Número de Cuenta</th>
+          <th>Titular</th>
+          <th>Tipo de Cuenta</th>
+          <th>Saldo Inicial</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cuenta of filteredCuentas">
+          <td>{{ cuenta.numero }}</td>
+          <td>{{ cuenta.nombre }}</td>
+          <td>{{ cuenta.tipoCuenta }}</td>
+          <td>${{ cuenta.saldoInicial | number:'1.2-2' }}</td>
+          <td>
+            <span [class]="'status-badge ' + (cuenta.estado ? 'active' : 'inactive')">
+              {{ cuenta.estado ? 'Activa' : 'Inactiva' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-secondary btn-sm" (click)="editCuenta(cuenta)">
+              Editar
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="deleteCuenta(cuenta.numero)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredCuentas.length === 0">
+          <td colspan="6" class="no-data">
+            No hay cuentas disponibles
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div *ngIf="!filteredCuentas || filteredCuentas.length === 0" class="no-data">
+      No se encontraron cuentas
+    </div>
+  </div>
+
+  <!-- Cuenta Modal -->
+  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ editingCuenta ? 'Editar Cuenta' : 'Nueva Cuenta' }}</h2>
+        <button class="close-btn" (click)="closeModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <!-- Error message inside modal -->
+      <div *ngIf="errorMessage" class="modal-error-message">
+        {{ errorMessage }}
+      </div>
+      
+      <form [formGroup]="cuentaForm" (ngSubmit)="saveCuenta()">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="numero">Número de Cuenta</label>
+              <input 
+                id="numero" 
+                type="text" 
+                formControlName="numero"
+                placeholder="Ingrese el número de cuenta"
+                [readonly]="editingCuenta"
+              >
+              <div *ngIf="cuentaForm.get('numero')?.invalid && cuentaForm.get('numero')?.touched" class="error-message">
+                El número de cuenta es requerido
+              </div>
+            </div>
+          </div>
+          <!-- Identificación field - solo visible en creación -->
+          <div *ngIf="!editingCuenta" class="form-row">
+            <div class="form-group">
+              <label for="identificacion">Identificación del Cliente</label>
+              <select id="identificacion" formControlName="identificacion">
+                <option value="">Seleccionar Cliente</option>
+                <option *ngFor="let cliente of clientes" [value]="cliente.identificacion">
+                  {{ cliente.identificacion }} - {{ cliente.nombre }}
+                </option>
+              </select>
+              <div *ngIf="cuentaForm.get('identificacion')?.invalid && cuentaForm.get('identificacion')?.touched" class="error-message">
+                La identificación es requerida
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tipoCuenta">Tipo de Cuenta</label>
+              <select id="tipoCuenta" formControlName="tipoCuenta">
+                <option value="">Seleccionar</option>
+                <option value="Ahorro">Ahorro</option>
+                <option value="Ahorros">Ahorros</option>
+                <option value="Corriente">Corriente</option>
+              </select>
+              <div *ngIf="cuentaForm.get('tipoCuenta')?.invalid && cuentaForm.get('tipoCuenta')?.touched" class="error-message">
+                El tipo de cuenta es requerido
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="saldoInicial">Saldo Inicial</label>
+              <input 
+                id="saldoInicial" 
+                type="number" 
+                formControlName="saldoInicial"
+                placeholder="Ingrese el saldo inicial"
+                min="0"
+                step="0.01"
+              >
+              <div *ngIf="cuentaForm.get('saldoInicial')?.invalid && cuentaForm.get('saldoInicial')?.touched" class="error-message">
+                El saldo inicial es requerido y debe ser mayor o igual a 0
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="estado">Estado</label>
+              <select id="estado" formControlName="estado">
+                <option [ngValue]="true">Activa</option>
+                <option [ngValue]="false">Inactiva</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="cuentaForm.invalid">
+            {{ editingCuenta ? 'Actualizar' : 'Guardar' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
