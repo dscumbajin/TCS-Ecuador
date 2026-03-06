@@ -26,35 +26,36 @@ public class ClienteServiceImpl implements IClienteServiceImpl{
     private ClientMapper clientMapper;
 
     @Override
-    public boolean save(ClienteRequestDTO clienteRequestDTO) {
+    public ClienteResponseDTO save(ClienteRequestDTO clienteRequestDTO) {
         Cliente clientReq = clienteRepository.findByIdentificacion(clienteRequestDTO.getIdentificacion());
         if (clientReq != null) {
-            throw new ClienteYaExisteException("La identificación debe ser única");
+            throw new ClienteYaExisteException("El cliente con identificación " + clienteRequestDTO.getIdentificacion() + " ya existe");
         } else {
-            clienteRepository.save(clientMapper.toEntity(clienteRequestDTO));
-            return true;
+            Cliente clienteGuardado = clienteRepository.save(clientMapper.toEntity(clienteRequestDTO));
+            return clientMapper.toClienteDTO(clienteGuardado);
         }
     }
 
     @Override
-    public boolean update(Long id, ClienteRequestDTO clienteRequestDTO) {
-        Optional<Cliente> clienteOptional = clienteRepository.findById(id);
-        if (clienteOptional.isEmpty()) {
-            throw new ClienteNotFoundException("Cliente no encontrado con ID: " + id);
+    public ClienteResponseDTO update(ClienteRequestDTO clienteRequestDTO) {
+        Cliente cliente = clienteRepository.findByIdentificacion(clienteRequestDTO.getIdentificacion());
+        if (cliente == null) {
+            throw new ClienteNotFoundException("Cliente no encontrado con identificación: " + clienteRequestDTO.getIdentificacion());
         } else {
-            clienteRepository.save(clientMapper.toEntity(clienteRequestDTO));
+            // Mantener el ID original del cliente
+            clienteRequestDTO.setId(cliente.getId());
+            Cliente clienteActualizado = clienteRepository.save(clientMapper.toEntity(clienteRequestDTO));
+            return clientMapper.toClienteDTO(clienteActualizado);
         }
-        return true;
     }
 
     @Override
-    public boolean delete(Long id) {
-
-        Optional<Cliente> clienteOptional = clienteRepository.findById(id);
-        if (clienteOptional.isEmpty()) {
-            throw new ClienteNotFoundException("Cliente no encontrado con ID: " + id);
+    public boolean deleteByIdentificacion(String identificacion) {
+        Cliente cliente = clienteRepository.findByIdentificacion(identificacion);
+        if (cliente == null) {
+            throw new ClienteNotFoundException("Cliente no encontrado con identificación: " + identificacion);
         } else {
-            clienteRepository.deleteById(id);
+            clienteRepository.deleteById(cliente.getId());
             return true;
         }
     }

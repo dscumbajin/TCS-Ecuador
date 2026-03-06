@@ -57,9 +57,13 @@ class ClienteServiceImplTest {
     @Test
     public void save() {
         ClienteRequestDTO cliente = new ClienteRequestDTO(1L, "Juan", "Masculino", 20, "1234567890", "Quito", "0987654321", "admin", true);
+        Cliente clienteEntity = new Cliente();
         when(clienteRepository.findByIdentificacion(cliente.getIdentificacion())).thenReturn(null);
-        boolean result = clienteService.save(cliente);
-        assertTrue(result);
+        when(clientMapper.toEntity(cliente)).thenReturn(clienteEntity);
+        when(clienteRepository.save(clienteEntity)).thenReturn(clienteEntity);
+        when(clientMapper.toClienteDTO(clienteEntity)).thenReturn(clienteResponseDTO);
+        ClienteResponseDTO result = clienteService.save(cliente);
+        assertNotNull(result);
         verify(clienteRepository, times(1)).save(clientMapper.toEntity(cliente));
     }
 
@@ -89,21 +93,23 @@ class ClienteServiceImplTest {
     }
 
     @Test
-    public void delete() {
-        Long idCliente = 1L;
+    public void deleteByIdentificacion() {
+        String identification = "1";
         Cliente cliente = new Cliente("test",true);
-        when(clienteRepository.findById(idCliente)).thenReturn(Optional.of(cliente));
-        boolean result = clienteService.delete(idCliente);
+        when(clienteRepository.findByIdentificacion(identification)).thenReturn(cliente);
+        boolean result = clienteService.deleteByIdentificacion(identification);
         assertTrue(result);
-        verify(clienteRepository, times(1)).deleteById(idCliente);
+        verify(clienteRepository, times(1)).findByIdentificacion(identification);
     }
 
     @Test
     public void updateExistingCliente() {
-        when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente));
+        when(clienteRepository.findByIdentificacion(clienteRequestDTO.getIdentificacion())).thenReturn(cliente);
         when(clientMapper.toEntity(clienteRequestDTO)).thenReturn(cliente);
-        boolean result = clienteService.update(1L, clienteRequestDTO);
-        assertTrue(result);
+        when(clienteRepository.save(cliente)).thenReturn(cliente);
+        when(clientMapper.toClienteDTO(cliente)).thenReturn(clienteResponseDTO);
+        ClienteResponseDTO result = clienteService.update(clienteRequestDTO);
+        assertNotNull(result);
         verify(clienteRepository, times(1)).save(cliente);
     }
 
@@ -111,21 +117,21 @@ class ClienteServiceImplTest {
     public void updateNonExistingCliente() {
         Long idCliente = 1L;
         ClienteRequestDTO clienteNoExistente = new ClienteRequestDTO(1L, "Juan", "Masculino", 20, "1234567890", "Quito", "0987654321", "admin", true);
-        when(clienteRepository.findById(idCliente)).thenReturn(Optional.empty());
+        when(clienteRepository.findByIdentificacion(clienteNoExistente.getIdentificacion())).thenReturn(null);
         ClienteNotFoundException exception = assertThrows(ClienteNotFoundException.class,
-                () -> clienteService.update(idCliente, clienteNoExistente));
-        assertEquals("Cliente no encontrado con ID: " + idCliente, exception.getMessage());
+                () -> clienteService.update(clienteNoExistente));
+        assertEquals("Cliente no encontrado con identificación: " + clienteNoExistente.getIdentificacion(), exception.getMessage());
         verify(clienteRepository, never()).save(any());
     }
 
     @Test
     public void deleteNonExistingCliente() {
-        Long idCliente = 1L;
-        when(clienteRepository.findById(idCliente)).thenReturn(Optional.empty());
+        String identification = "1";
+        when(clienteRepository.findByIdentificacion(identification)).thenReturn(null);
         ClienteNotFoundException exception = assertThrows(ClienteNotFoundException.class,
-                () -> clienteService.delete(idCliente));
-        assertEquals("Cliente no encontrado con ID: " + idCliente, exception.getMessage());
-        verify(clienteRepository, never()).deleteById(anyLong());
+                () -> clienteService.deleteByIdentificacion(identification));
+        assertEquals("Cliente no encontrado con identificación: " + identification, exception.getMessage());
+        verify(clienteRepository, times(1)).findByIdentificacion(identification);
     }
 
     @Test

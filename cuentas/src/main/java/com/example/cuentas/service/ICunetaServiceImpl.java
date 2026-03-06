@@ -8,8 +8,8 @@ import java.util.List;
 public interface ICunetaServiceImpl {
 
     boolean save(CuentaRequestDTO cuentaDTO);
-    boolean update(Long id, CuentaDTO cuentaDTO);
-    boolean delete(Long id);
+    boolean update(CuentaDTO cuentaDTO);
+    boolean deleteByNumero(String numero);
     List<CuentaDTO> cuentaDtos();
     CuentaDTO findById(Long id);
     CuentaDTO findByNumero(String numero);

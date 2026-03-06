@@ -11,11 +11,6 @@ import org.mapstruct.Mappings;
 public interface ClientMapper {
     ClienteResponseDTO toClienteDTO(Cliente cliente);
 
-    @Mappings({
-            @Mapping(target = "genero", ignore = true),
-            @Mapping(target = "edad", ignore = true),
-            @Mapping(target = "identificacion", ignore = true),
-    })
     ClienteRequestDTO toClienteIdDTO(Cliente cliente);
 
     Cliente toEntity (ClienteRequestDTO clienteRequestDTO);

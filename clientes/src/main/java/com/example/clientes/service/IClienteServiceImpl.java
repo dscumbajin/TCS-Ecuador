@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface IClienteServiceImpl {
 
-    boolean save(ClienteRequestDTO clienteRequestDTO);
-    boolean update(Long id, ClienteRequestDTO clienteRequestDTO);
-    boolean delete(Long id);
+    ClienteResponseDTO save(ClienteRequestDTO clienteRequestDTO);
+    ClienteResponseDTO update(ClienteRequestDTO clienteRequestDTO);
+    boolean deleteByIdentificacion(String identificacion);
     List<ClienteResponseDTO> clienteDTOs();
     ClienteResponseDTO findById(Long id);
     ClienteRequestDTO findByIdentificacion(String identificacion);

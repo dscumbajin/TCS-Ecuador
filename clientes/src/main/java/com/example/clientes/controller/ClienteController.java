@@ -14,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/clientes")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:80"})
 public class ClienteController {
 
     @Autowired
@@ -63,32 +65,35 @@ public class ClienteController {
 
     @Transactional
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createCliente( @Valid @RequestBody ClienteRequestDTO ClienteRequestDTO) {
+    public ResponseEntity<?> createCliente(@Valid @RequestBody ClienteRequestDTO ClienteRequestDTO) {
         try {
             return new ResponseEntity<>(clienteService.save(ClienteRequestDTO), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+            // No manejar errores aquí, dejar que el GlobalExceptionHandler los procese
+            throw e;
         }
     }
     @Transactional
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateCliente(@PathVariable Long id, @RequestBody ClienteRequestDTO ClienteRequestDTO) {
+    @PutMapping
+    public ResponseEntity<?> updateCliente(@RequestBody ClienteRequestDTO ClienteRequestDTO) {
         try {
-            boolean resp = clienteService.update(id, ClienteRequestDTO);
-            return new ResponseEntity<>("Cliente actualizado", HttpStatus.CREATED);
+            ClienteResponseDTO clienteActualizado = clienteService.update(ClienteRequestDTO);
+            return new ResponseEntity<>(clienteActualizado, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
     @Transactional
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCliente(@PathVariable Long id) {
+    @DeleteMapping("/{identificacion}")
+    public ResponseEntity<?> deleteCliente(@PathVariable String identificacion) {
         try {
-            clienteService.delete(id);
-            return new ResponseEntity<>("Cliente eliminado correctamente", HttpStatus.OK);
+            clienteService.deleteByIdentificacion(identificacion);
+            return new ResponseEntity<>(Map.of("message", "Cliente eliminado correctamente"), HttpStatus.OK);
         } catch (ClienteNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Map.of("error", e.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("error", "Error al eliminar cliente: " + e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 }

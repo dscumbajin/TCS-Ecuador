@@ -58,9 +58,11 @@ public class CuentaServiceImpl implements ICunetaServiceImpl {
     }
 
     @Override
-    public boolean update(Long id, CuentaDTO cuentaDTO) {
-        Cuenta cuenta = cuentaRepository.findById(id)
-                .orElseThrow(() -> new CuentaNotFoundException("No existe la cuenta con el ID: " + id));
+    public boolean update(CuentaDTO cuentaDTO) {
+        Cuenta cuenta = cuentaRepository.findByNumero(cuentaDTO.getNumero());
+        if (cuenta == null) {
+            throw new CuentaNotFoundException("Cuenta no encontrada con número: " + cuentaDTO.getNumero());
+        }
         cuenta.setTipoCuenta(cuentaDTO.getTipoCuenta());
         cuenta.setEstado(cuentaDTO.isEstado());
         cuentaRepository.save(cuenta);
@@ -68,10 +70,12 @@ public class CuentaServiceImpl implements ICunetaServiceImpl {
     }
 
     @Override
-    public boolean delete(Long id) {
-        cuentaRepository.findById(id)
-                .orElseThrow(() -> new CuentaNotFoundException("Cuenta no encontrada con ID: " + id));
-        cuentaRepository.deleteById(id);
+    public boolean deleteByNumero(String numero) {
+        Cuenta cuenta = cuentaRepository.findByNumero(numero);
+        if (cuenta == null) {
+            throw new CuentaNotFoundException("Cuenta no encontrada con número: " + numero);
+        }
+        cuentaRepository.deleteById(cuenta.getCuentaId());
         return true;
     }
 

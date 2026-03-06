@@ -1,517 +1,490 @@
 {
-	"info": {
-		"_postman_id": "9c82fafa-e2b9-4253-bd9c-583fd70af1c3",
-		"name": "TestTecnico",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "6171093"
-	},
-	"item": [
-		{
-			"name": "cliente",
-			"item": [
-				{
-					"name": "clientes",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_clientes}}/api/clientes",
-							"host": [
-								"{{base_url_clientes}}"
-							],
-							"path": [
-								"api",
-								"clientes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "cliente id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_clientes}}/api/clientes/1",
-							"host": [
-								"{{base_url_clientes}}"
-							],
-							"path": [
-								"api",
-								"clientes",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "cliente por identificacion",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_clientes}}/api/clientes/cliente?identificacion=0213456789",
-							"host": [
-								"{{base_url_clientes}}"
-							],
-							"path": [
-								"api",
-								"clientes",
-								"cliente"
-							],
-							"query": [
-								{
-									"key": "identificacion",
-									"value": "0213456789"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "cliente por nombre",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_clientes}}/api/clientes/nombre?nombre=Marianela Montalvo",
-							"host": [
-								"{{base_url_clientes}}"
-							],
-							"path": [
-								"api",
-								"clientes",
-								"nombre"
-							],
-							"query": [
-								{
-									"key": "nombre",
-									"value": "Marianela Montalvo"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "cliente",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n        \"nombre\": \"Marianela Montalvo\",\r\n        \"genero\": \"Femenino\",\r\n        \"edad\": 21,\r\n        \"identificacion\": \"0147852369\",\r\n        \"direccion\": \" Amazonas y NNUU \",\r\n        \"telefono\": \"0975489650\",\r\n        \"contrasena\": \"5678\",\r\n        \"estado\": true\r\n    }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url_clientes}}/api/clientes",
-							"host": [
-								"{{base_url_clientes}}"
-							],
-							"path": [
-								"api",
-								"clientes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update cliente",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n        \"nombre\": \"Marianela Montalvo\",\r\n        \"genero\": \"Femenino\",\r\n        \"edad\": 18,\r\n        \"direccion\": \"Loja\",\r\n        \"telefono\": \"097548965\",\r\n        \"contrasena\": \"5678\",\r\n        \"estado\": true\r\n    }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url_clientes}}/api/clientes/2",
-							"host": [
-								"{{base_url_clientes}}"
-							],
-							"path": [
-								"api",
-								"clientes",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete cliente by id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url_clientes}}/api/clientes/5",
-							"host": [
-								"{{base_url_clientes}}"
-							],
-							"path": [
-								"api",
-								"clientes",
-								"5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:8081/api/clientes/nombre?nombre=Marianela%20Montalvo",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_clientes}}/api/clientes/nombre?nombre=Marianela%20Montalvo",
-							"host": [
-								"{{base_url_clientes}}"
-							],
-							"path": [
-								"api",
-								"clientes",
-								"nombre"
-							],
-							"query": [
-								{
-									"key": "nombre",
-									"value": "Marianela%20Montalvo"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "cuentas",
-			"item": [
-				{
-					"name": "cuentas",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/cuentas",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"cuentas"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "cuenta id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/cuentas/1",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"cuentas",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "cuenta",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n        \"numero\": \"585545\",\r\n        \"tipoCuenta\": \"Corriente\",\r\n        \"saldoInicial\": 1000,\r\n        \"estado\": true,\r\n        \"identificacion\": \"0147852369\"\r\n    }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/cuentas",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"cuentas"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update cuenta",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": " {\r\n        \"tipoCuenta\": \"Ahorros\",\r\n        \"saldoInicial\": 1000.0,\r\n        \"estado\": true\r\n    }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/cuentas/5",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"cuentas",
-								"5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete cuenta by id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/cuentas/6",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"cuentas",
-								"6"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "movimiento",
-			"item": [
-				{
-					"name": "movimientos",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/movimientos",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"movimientos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Reporte",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/reportes?nombre=Marianela Montalvo&fechaInicio=03/3/2026&fechaFin=04/3/2026",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"reportes"
-							],
-							"query": [
-								{
-									"key": "nombre",
-									"value": "Marianela Montalvo"
-								},
-								{
-									"key": "fechaInicio",
-									"value": "03/3/2026"
-								},
-								{
-									"key": "fechaFin",
-									"value": "03/3/2026"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "movimiento id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/movimientos/5",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"movimientos",
-								"5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "movimiento by number cuenta",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/movimientos/cuenta?numero=496825",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"movimientos",
-								"cuenta"
-							],
-							"query": [
-								{
-									"key": "numero",
-									"value": "496825"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "movimiento",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"numero\": \"585545\",\r\n    \"tipo\": \"Retiro\",\r\n    \"valor\": \"200\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/movimientos",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"movimientos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update movimiento",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"numero\": \"496825\",\r\n    \"tipo\": \"Retiro\",\r\n    \"valor\": \"540\"\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/movimientos/3",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"movimientos",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete movimiento by id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url_cuentas}}/api/movimientos/5",
-							"host": [
-								"{{base_url_cuentas}}"
-							],
-							"path": [
-								"api",
-								"movimientos",
-								"5"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "1eaa7642-24b3-4bfb-bccc-fcf9ff088998",
+    "name": "TestTecnico",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "6171093"
+  },
+  "item": [
+    {
+      "name": "cliente",
+      "item": [
+        {
+          "name": "clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_clientes}}/api/clientes",
+              "host": [
+                "{{base_url_clientes}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cliente id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_clientes}}/api/clientes/1",
+              "host": [
+                "{{base_url_clientes}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cliente por identificacion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_clientes}}/api/clientes/cliente?identificacion=0147852369",
+              "host": [
+                "{{base_url_clientes}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "cliente"
+              ],
+              "query": [
+                {
+                  "key": "identificacion",
+                  "value": "0147852369"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cliente por nombre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_clientes}}/api/clientes/nombre?nombre=Marianela Montalvo",
+              "host": [
+                "{{base_url_clientes}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "nombre"
+              ],
+              "query": [
+                {
+                  "key": "nombre",
+                  "value": "Marianela Montalvo"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cliente",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n        \"nombre\": \"Marianela Montalvo\",\r\n        \"genero\": \"Femenino\",\r\n        \"edad\": 21,\r\n        \"identificacion\": \"0147852369\",\r\n        \"direccion\": \" Amazonas y NNUU \",\r\n        \"telefono\": \"0975489650\",\r\n        \"contrasena\": \"5678\",\r\n        \"estado\": true\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url_clientes}}/api/clientes",
+              "host": [
+                "{{base_url_clientes}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update cliente",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n        \"identificacion\": \"0147852369\",\r\n        \"nombre\": \"Marianela Montalvo\",\r\n        \"genero\": \"Femenino\",\r\n        \"edad\": 18,\r\n        \"direccion\": \"Loja\",\r\n        \"telefono\": \"097548965\",\r\n        \"contrasena\": \"5678\",\r\n        \"estado\": true\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url_clientes}}/api/clientes",
+              "host": [
+                "{{base_url_clientes}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete cliente by identificacion",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url_clientes}}/api/clientes/0123456789",
+              "host": [
+                "{{base_url_clientes}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "0123456789"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "cuentas",
+      "item": [
+        {
+          "name": "cuentas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/cuentas",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "cuentas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cuenta id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/cuentas/1",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "cuentas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cuenta",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n        \"numero\": \"585545\",\r\n        \"tipoCuenta\": \"Corriente\",\r\n        \"saldoInicial\": 1000,\r\n        \"estado\": true,\r\n        \"identificacion\": \"0147852369\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/cuentas",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "cuentas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update cuenta",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": " {\r\n        \"numero\": \"585545\",\r\n        \"tipoCuenta\": \"Ahorros\",\r\n        \"saldoInicial\": 1000.0,\r\n        \"estado\": true\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/cuentas",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "cuentas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete cuenta by numero",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/cuentas/58554578",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "cuentas",
+                "58554578"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "movimiento",
+      "item": [
+        {
+          "name": "movimientos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/movimientos",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "movimientos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reporte",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/reportes?nombre=Marianela Montalvo&fechaInicio=03/3/2026&fechaFin=04/3/2026",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "reportes"
+              ],
+              "query": [
+                {
+                  "key": "nombre",
+                  "value": "Marianela Montalvo"
+                },
+                {
+                  "key": "fechaInicio",
+                  "value": "03/3/2026"
+                },
+                {
+                  "key": "fechaFin",
+                  "value": "04/3/2026"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "movimiento id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/movimientos/5",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "movimientos",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "movimiento by number cuenta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/movimientos/cuenta?numero=496825",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "movimientos",
+                "cuenta"
+              ],
+              "query": [
+                {
+                  "key": "numero",
+                  "value": "496825"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "movimiento",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"numero\": \"585545\",\r\n    \"tipo\": \"Retiro\",\r\n    \"valor\": \"200\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/movimientos",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "movimientos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update movimiento",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"numero\": \"496825\",\r\n    \"tipo\": \"Retiro\",\r\n    \"valor\": \"540\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/movimientos/3",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "movimientos",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete movimiento by id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url_cuentas}}/api/movimientos/5",
+              "host": [
+                "{{base_url_cuentas}}"
+              ],
+              "path": [
+                "api",
+                "movimientos",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }

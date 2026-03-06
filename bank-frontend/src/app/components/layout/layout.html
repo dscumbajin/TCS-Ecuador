@@ -1,0 +1,52 @@
+<div class="app-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <span>Reto técnico</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="nav-section">
+        <h3 class="nav-title">Funcionalidades</h3>
+        <h4 class="nav-subtitle">Front End</h4>
+      </div>
+      
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a routerLink="/clientes" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-users"></i>
+            <span>Clientes</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/cuentas" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-wallet"></i>
+            <span>Cuentas</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/movimientos" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Movimientos</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/reportes" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reportes</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

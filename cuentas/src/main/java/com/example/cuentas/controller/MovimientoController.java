@@ -19,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/movimientos")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4201"})
 public class MovimientoController {
 
     @Autowired

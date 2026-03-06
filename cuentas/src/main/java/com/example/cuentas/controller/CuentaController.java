@@ -20,6 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/cuentas")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:80", "http://localhost"})
 public class CuentaController {
 
     @Autowired
@@ -73,11 +74,11 @@ public class CuentaController {
     }
 
     @Transactional
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateCuenta(@PathVariable Long id, @Valid @RequestBody CuentaDTO cuentaDTO) {
+    @PutMapping()
+    public ResponseEntity<?> updateCuenta( @Valid @RequestBody CuentaDTO cuentaDTO) {
         Map<String, String> response = new HashMap<>();
         try {
-            boolean updated = cuentaService.update(id, cuentaDTO);
+            boolean updated = cuentaService.update(cuentaDTO);
             if (updated) {
                 response.put("message", "Cuenta actualizada con éxito");
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -95,11 +96,11 @@ public class CuentaController {
     }
 
     @Transactional
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCuenta(@PathVariable Long id) {
+    @DeleteMapping("/{numero}")
+    public ResponseEntity<?> deleteCuenta(@PathVariable String numero) {
         Map<String, String> response = new HashMap<>();
         try {
-            cuentaService.delete(id);
+            cuentaService.deleteByNumero(numero);
             response.put("message", "Cuenta eliminada correctamente");
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (CuentaNotFoundException e) {

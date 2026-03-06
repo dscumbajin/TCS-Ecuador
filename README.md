@@ -71,6 +71,7 @@ Puedes modificar las variables en el archivo `.env` según tus necesidades:
 
 Una vez desplegados, los servicios estarán disponibles en:
 
+- **FrontEnd**: http://localhost:80
 - **API Clientes**: http://localhost:8081
 - **API Cuentas**: http://localhost:8082
 - **MySQL**: localhost:3306

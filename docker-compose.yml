@@ -61,6 +61,21 @@ services:
       - app-network
     restart: unless-stopped
 
+  # Frontend Angular Application
+  bank-frontend:
+    build:
+      context: ./bank-frontend
+      dockerfile: Dockerfile
+    container_name: bank-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - clientes-service
+      - cuentas-service
+    networks:
+      - app-network
+    restart: unless-stopped
+
 volumes:
   mysql_data:
 
