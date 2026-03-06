@@ -31,12 +31,15 @@ export class ReporteService {
   private formatDate(dateString: string): string {
     if (!dateString) return '';
     
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.getMonth() + 1; // Months are 0-indexed
-    const year = date.getFullYear();
+    // HTML date input provides date in YYYY-MM-DD format
+    // We need to convert it to dd/MM/yyyy format
+    const [year, month, day] = dateString.split('-');
     
-    return `${day}/${month}/${year}`;
+    // Ensure two-digit format for day and month
+    const formattedDay = day.padStart(2, '0');
+    const formattedMonth = month.padStart(2, '0');
+    
+    return `${formattedDay}/${formattedMonth}/${year}`;
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

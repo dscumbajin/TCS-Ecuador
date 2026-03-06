@@ -70,6 +70,11 @@ export class MovimientosComponent implements OnInit {
     });
   }
 
+  getNombreCuenta(numero: string): string {
+    const cuenta = this.cuentas.find(c => c.numero === numero);
+    return cuenta ? cuenta.nombre : 'Desconocido';
+  }
+
   filterMovimientos(): void {
     if (!this.searchTerm || this.searchTerm.trim() === '') {
       this.filteredMovimientos = [...this.movimientos];
@@ -79,6 +84,7 @@ export class MovimientosComponent implements OnInit {
     const term = this.searchTerm.toLowerCase().trim();
     this.filteredMovimientos = this.movimientos.filter(movimiento =>
       movimiento.numero.toLowerCase().includes(term) ||
+      this.getNombreCuenta(movimiento.numero).toLowerCase().includes(term) ||
       movimiento.tipo.toLowerCase().includes(term) ||
       movimiento.valor.toLowerCase().includes(term)
     );

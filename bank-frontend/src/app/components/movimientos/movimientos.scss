@@ -414,6 +414,20 @@ input[type="checkbox"] {
   background-color: #7f8c8d;
 }
 
+.cuenta-info {
+  strong {
+    display: block;
+    color: #2c3e50;
+    font-size: 0.9rem;
+  }
+  
+  .text-muted {
+    color: #6c757d;
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+}
+
 .modal-error-message {
   background-color: #fadbd8;
   color: #e74c3c;

@@ -45,8 +45,8 @@ public class ReporteServiceImpl implements IReporteServiceImpl {
     @Override
     public List<ReporteDTO> findByCuentaNumeroAndFechaBetween(String numero, String fechaInicio, String fechaFin) {
         try{
-            Date inicioFecha = Conversion.convertStringToDate(fechaInicio);
-            Date finFecha = Conversion.convertStringToDate(fechaFin);
+            Date inicioFecha = Conversion.convertStringToStartOfDay(fechaInicio);
+            Date finFecha = Conversion.convertStringToEndOfDay(fechaFin);
             List<ReporteDTO> reporteDTOS = new ArrayList<>();
             List<Movimiento> movimientos = movimientoRepository.findByCuentaNumeroAndFechaBetween(numero, inicioFecha, finFecha);
             if(!movimientos.isEmpty()){
@@ -78,8 +78,8 @@ public class ReporteServiceImpl implements IReporteServiceImpl {
     @Retryable(value = ClienteServiceUnavailableException.class, maxAttempts = 3, backoff = @Backoff(delay = 2000))
     public List<ReporteDTO> findByNombreAndFechaBetween(String nombre, String fechaInicio, String fechaFin) {
         try{
-            Date inicioFecha = Conversion.convertStringToDate(fechaInicio);
-            Date finFecha = Conversion.convertStringToDate(fechaFin);
+            Date inicioFecha = Conversion.convertStringToStartOfDay(fechaInicio);
+            Date finFecha = Conversion.convertStringToEndOfDay(fechaFin);
             List<ReporteDTO> reporteDTOS = new ArrayList<>();
             ClienteDTO cliente = clienteClient.getClienteByName(nombre);
             if(cliente != null){

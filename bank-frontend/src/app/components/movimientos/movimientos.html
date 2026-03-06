@@ -8,7 +8,7 @@
         type="text" 
         [(ngModel)]="searchTerm" 
         (input)="filterMovimientos()" 
-        placeholder="Buscar por número, tipo o valor..."
+        placeholder="Buscar por cuenta, titular, tipo o valor..."
         class="search-input"
       />
     </div>
@@ -31,7 +31,7 @@
     <table class="movimientos-table">
       <thead>
         <tr>
-          <th>Número</th>
+          <th>Cuenta</th>
           <th>Tipo</th>
           <th>Saldo</th>
           <th>Estado</th>
@@ -40,7 +40,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let movimiento of filteredMovimientos">
-          <td>{{ movimiento.numero }}</td>
+          <td>
+            <div class="cuenta-info">
+              <strong>{{ movimiento.numero }}</strong>
+              <br>
+              <small class="text-muted">{{ getNombreCuenta(movimiento.numero) }}</small>
+            </div>
+          </td>
           <td>
             <span [class]="movimiento.tipo === 'Deposito' ? 'tipo-badge deposito' : 'tipo-badge retiro'">
               {{ movimiento.tipo }}
