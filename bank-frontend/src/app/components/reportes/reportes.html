@@ -1,1 +1,104 @@
-<p>reportes works!</p>
+<div class="reportes-container">
+  <h2>Generar Reportes</h2>
+  
+  <div class="form-container">
+    <div class="form-group">
+      <label for="cliente">Cuenta:</label>
+      <select id="cliente" [(ngModel)]="selectedCliente" class="form-control">
+        <option value="">Seleccione una cuenta...</option>
+        <option *ngFor="let cuenta of cuentas" [value]="cuenta.nombre">
+          {{ cuenta.numero }} - {{ cuenta.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaInicio">Fecha Inicio:</label>
+      <input 
+        type="date" 
+        id="fechaInicio" 
+        [(ngModel)]="fechaInicio" 
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="fechaFin">Fecha Fin:</label>
+      <input 
+        type="date" 
+        id="fechaFin" 
+        [(ngModel)]="fechaFin" 
+        class="form-control"
+      />
+    </div>
+
+    <div class="button-group">
+      <button 
+        (click)="generarReporte()" 
+        [disabled]="isLoading"
+        class="btn btn-primary"
+      >
+        {{ isLoading ? 'Generando...' : 'Generar Reporte' }}
+      </button>
+      <button 
+        (click)="limpiar()" 
+        class="btn btn-secondary"
+      >
+        Limpiar
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="reportes.length > 0" class="reporte-table-container">
+    <div class="reporte-header">
+      <h3>Resultados del Reporte</h3>
+      <button 
+        (click)="exportToPDF()" 
+        class="btn btn-success"
+        title="Exportar a PDF"
+      >
+        📄 Exportar PDF
+      </button>
+    </div>
+    <table class="reporte-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Cliente</th>
+          <th>Número Cuenta</th>
+          <th>Tipo</th>
+          <th>Saldo Inicial</th>
+          <th>Estado</th>
+          <th>Movimiento</th>
+          <th>Saldo Disponible</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reporte of reportes">
+          <td>{{ reporte.fecha }}</td>
+          <td>{{ reporte.cliente }}</td>
+          <td>{{ reporte.numeroCuenta }}</td>
+          <td>{{ reporte.tipo }}</td>
+          <td>${{ reporte.saldoInicial.toFixed(2) }}</td>
+          <td>
+            <span [class]="reporte.estado ? 'status-active' : 'status-inactive'">
+              {{ reporte.estado ? 'Activa' : 'Inactiva' }}
+            </span>
+          </td>
+          <td [class]="reporte.movimiento.startsWith('-') ? 'movimiento-negativo' : 'movimiento-positivo'">
+            ${{ reporte.movimiento }}
+          </td>
+          <td>${{ reporte.saldoDisponible.toFixed(2) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!isLoading && reportes.length === 0 && selectedCliente && fechaInicio && fechaFin && !error" class="no-data">
+    No se encontraron datos para los criterios seleccionados.
+  </div>
+</div>

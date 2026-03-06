@@ -1,1 +1,134 @@
-<p>movimientos works!</p>
+<div class="movimientos-container">
+  <h1>Gestión de Movimientos</h1>
+
+  <div class="actions-bar">
+    <div class="search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (input)="filterMovimientos()" 
+        placeholder="Buscar por número, tipo o valor..."
+        class="search-input"
+      />
+    </div>
+    <button class="btn btn-primary" (click)="openNewMovimientoModal()">
+      Nuevo
+    </button>
+  </div>
+
+  <!-- Success/Error Messages -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Movimientos Table -->
+  <div class="table-container">
+    <table class="movimientos-table">
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Tipo</th>
+          <th>Saldo</th>
+          <th>Estado</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movimiento of filteredMovimientos">
+          <td>{{ movimiento.numero }}</td>
+          <td>
+            <span [class]="movimiento.tipo === 'Deposito' ? 'tipo-badge deposito' : 'tipo-badge retiro'">
+              {{ movimiento.tipo }}
+            </span>
+          </td>
+          <td>${{ movimiento.saldo.toFixed(2) }}</td>
+          <td>
+            <span [class]="movimiento.estado ? 'status-badge active' : 'status-badge inactive'">
+              {{ movimiento.estado ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td>
+            <span [class]="movimiento.valor.startsWith('-') ? 'valor-badge negativo' : 'valor-badge positivo'">
+              ${{ movimiento.valor }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="filteredMovimientos.length === 0" class="no-data">
+      No se encontraron movimientos.
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ editingMovimiento ? 'Editar Movimiento' : 'Nuevo Movimiento' }}</h3>
+        <button class="close-btn" (click)="closeModal()">×</button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="movimientoForm" (ngSubmit)="saveMovimiento()">
+          <div class="form-group">
+            <label for="numero">Número de Cuenta:</label>
+            <select id="numero" formControlName="numero" class="form-control" [disabled]="editingMovimiento">
+              <option value="">Seleccione una cuenta...</option>
+              <option *ngFor="let cuenta of cuentas" [value]="cuenta.numero">
+                {{ cuenta.numero }} - {{ cuenta.nombre }}
+              </option>
+            </select>
+            <div *ngIf="movimientoForm.get('numero')?.touched && movimientoForm.get('numero')?.invalid" class="error-message">
+              El número de cuenta es requerido
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tipo">Tipo:</label>
+            <select id="tipo" formControlName="tipo" class="form-control">
+              <option value="">Seleccione tipo...</option>
+              <option value="Deposito">Depósito</option>
+              <option value="Retiro">Retiro</option>
+            </select>
+            <div *ngIf="movimientoForm.get('tipo')?.touched && movimientoForm.get('tipo')?.invalid" class="error-message">
+              El tipo es requerido
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="valor">Valor:</label>
+            <input 
+              type="text" 
+              id="valor" 
+              formControlName="valor" 
+              class="form-control"
+              placeholder="Ej: 600 o -575"
+            />
+            <div *ngIf="movimientoForm.get('valor')?.touched && movimientoForm.get('valor')?.invalid" class="error-message">
+              El valor es requerido
+            </div>
+          </div>
+
+          <div *ngIf="errorMessage" class="modal-error-message">
+            {{ errorMessage }}
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="movimientoForm.invalid" (click)="saveMovimiento()">
+          {{ editingMovimiento ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
